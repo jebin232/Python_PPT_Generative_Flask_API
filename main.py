@@ -93,11 +93,11 @@ def create_presentation(title, contents):
 
             left = random.choice([0, 1])  # 0 for left, 1 for right
             if left == 0:
-                    add_image_to_slide(slide, left_image, 0.5, 6.0, 2, 2)  # Adjust bottom value
-                    add_image_to_slide(slide, right_image, 6.5, 6.0, 2, 2)  # Adjust bottom value
+                    add_image_to_slide(slide, left_image, 0.5, 7.0, 2, 2)  # Adjust bottom value
+                    add_image_to_slide(slide, right_image, 6.5, 7.0, 2, 2)  # Adjust bottom value
             else:
-                    add_image_to_slide(slide, right_image, 0.5, 6.0, 2, 2)  # Adjust bottom value
-                    add_image_to_slide(slide, left_image, 6.5, 6.0, 2, 2)  # Adjust bottom value
+                    add_image_to_slide(slide, right_image, 0.5, 7.0, 2, 2)  # Adjust bottom value
+                    add_image_to_slide(slide, left_image, 6.5, 7.0, 2, 2)  # Adjust bottom value
 
     return prs
 
