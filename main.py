@@ -102,7 +102,7 @@ def create_presentation(title, contents):
     return prs
 
 
-@app.route('/ppt', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         title = request.form['title']
