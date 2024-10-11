@@ -1,6 +1,5 @@
 from flask import Flask, request, send_file, render_template
 from pptx import Presentation
-from pptx.util import Inches
 import io
 import google.generativeai as genai
 
@@ -25,45 +24,9 @@ def generate_text_from_title(title):
     
     return response.text
 
-import requests
-from PIL import Image
-from io import BytesIO
-import random
-
-def get_random_image_url():
-    # Replace this with your preferred image search API or URL
-    # For demonstration, I'll use Unsplash API
-    response = requests.get('https://source.unsplash.com/random')
-    return response.url
-
-def download_and_resize_image(image_url, target_width, target_height):
-    response = requests.get(image_url)
-    img = Image.open(BytesIO(response.content))
-    img.thumbnail((target_width, target_height))
-    
-    # Convert the image to RGB mode if it's not already
-    if img.mode != 'RGB':
-        img = img.convert('RGB')
-    
-    return img
-
-def add_image_to_slide(slide, image_data, left, bottom, width, height):
-    left_inch = Inches(left)
-    bottom_inch = Inches(bottom)
-    width_inch = Inches(width)
-    height_inch = Inches(height)
-    
-    image_stream = BytesIO()
-    image_data.save(image_stream, format='PNG')  # Save the image to a stream in PNG format
-    image_stream.seek(0)  # Reset the stream position to the beginning
-    
-    slide.shapes.add_picture(image_stream, left_inch, bottom_inch - height_inch, width_inch, height_inch)
-
-
 def create_presentation(title, contents):
     prs = Presentation()
     content = contents.replace('*', '')
-
 
     # Title Slide
     slide_layout = prs.slide_layouts[0]
@@ -84,23 +47,7 @@ def create_presentation(title, contents):
             content_placeholder = slide.placeholders[1]
             content_placeholder.text = paragraph
 
-            # Add images randomly on left and right sides
-            left_image_url = get_random_image_url()
-            right_image_url = get_random_image_url()
-
-            left_image = download_and_resize_image(left_image_url, 200, 200)
-            right_image = download_and_resize_image(right_image_url, 200, 200)
-
-            left = random.choice([0, 1])  # 0 for left, 1 for right
-            if left == 0:
-                    add_image_to_slide(slide, left_image, 0.5, 7.0, 2, 2)  # Adjust bottom value
-                    add_image_to_slide(slide, right_image, 6.5, 7.0, 2, 2)  # Adjust bottom value
-            else:
-                    add_image_to_slide(slide, right_image, 0.5, 7.0, 2, 2)  # Adjust bottom value
-                    add_image_to_slide(slide, left_image, 6.5, 7.0, 2, 2)  # Adjust bottom value
-
     return prs
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
