@@ -7,7 +7,7 @@ import google.generativeai as genai
 app = Flask(__name__)
 
 # Google Gemini API Key Configuration
-gemini_api_key = "AIzaSyAtPkrzg6fNBVGhtnJS5ahri0z3WZQQS3Q"
+gemini_api_key = "AIzaSyBct_7JTaia75avYy1TXMfTb_bfueU1vkw"
 genai.configure(api_key=gemini_api_key)
 
 def generate_text_from_title(title):
